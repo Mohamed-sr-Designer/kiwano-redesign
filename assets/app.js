@@ -21,7 +21,7 @@ const gate=$('.gate');
 if(gate&&!still){
   const pin=$('.gate-pin'),figs=$$('.fig'),L=$('.door.l'),R=$('.door.r'),ins=$('.st-in'),hi=$('.hi'),tx=$$('.g-t'),wms=$$('.wm'),floors=$$('.floor');
   const VW=320,VH=480,MX=160,MY=215,MH=403;let W,H,u,s0,x0,y0;
-  function size(){W=pin.offsetWidth;H=pin.offsetHeight;$('.box').forEach(b=>b.style.width=W+'px');$('.door.r .box').style.left=-W/2+'px';u=1.28*H/MH;
+  function size(){W=pin.offsetWidth;H=pin.offsetHeight;$$('.box').forEach(b=>b.style.width=W+'px');$('.door.r .box').style.left=-W/2+'px';u=1.28*H/MH;
     const target=Math.min(H*.8,W*1.25);s0=target/(VH*u);
     figs.forEach(f=>{f.style.width=VW*u+'px';f.style.height=VH*u+'px'});
     x0=W/2-MX*u*s0;y0=H*.965-VH*u*s0;frame()}
@@ -35,7 +35,7 @@ if(gate&&!still){
     wms.forEach(e=>e.style.opacity=.13*clamp(1-p/.22,0,1));floors.forEach(e=>e.style.transform=`translateY(${p*500}%)`);
     const q=smooth(clamp((p-.74)/.14,0,1));ins.style.opacity=q;ins.style.transform=`translateY(${(1-q)*24}px)`;
   }
-  addEventListener('resize',size);addEventListener('scroll',()=>requestAnimationFrame(frame),{passive:true});size();
+  new ResizeObserver(size).observe(pin);addEventListener('scroll',()=>requestAnimationFrame(frame),{passive:true});size();
   const doors=[L,R];doors.forEach(d=>d.classList.add('intro'));
   setTimeout(()=>{doors.forEach(d=>{d.classList.remove('intro');d.classList.add('waved')});if(scrollY<40)hi.classList.add('on')},2050);
 
