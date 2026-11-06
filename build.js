@@ -160,166 +160,165 @@ const ROLES = [
     b: ['Requirements', ['Ideally 2+ years in content creation or copywriting', 'Exceptional writing and proofreading in Arabic and English', 'Strong understanding of social platforms and audience behavior', 'Storytelling and conceptual thinking', 'Organized and detail-minded', 'Planning tools, analytics and SEO are a plus']] },
 ];
 
-/* ---------- Partials ---------- */
-const SPIKE = `<svg class="sp" viewBox="-30 -30 60 60" aria-hidden="true" fill="currentColor"><path d="M-3-25Q16-13 29-1 12 3-7 21 0-2-3-25Z"/></svg>`;
-const SPIKES_SVG = `<svg class="h-spikes" viewBox="-100 -100 200 200" aria-hidden="true"><g id="sk"><path d="M108-23Q136-10 160 0 136 10 108 23 118 0 108-23Z"/></g><use href="#sk" transform="rotate(-40)"/><use href="#sk" transform="rotate(40)"/></svg>`;
-const SUN = `<svg viewBox="-110 -110 290 220" aria-hidden="true"><path fill="#F9AE03" fill-rule="evenodd" d="M0-100a100 100 0 1 0 0 200 100 100 0 1 0 0-200Zm0 56a44 44 0 1 1 0 88 44 44 0 1 1 0-88Z"/><g fill="#F9AE03"><path d="M112-26Q142-12 168 0 142 12 112 26 122 0 112-26Z"/><path transform="rotate(-40)" d="M112-26Q142-12 168 0 142 12 112 26 122 0 112-26Z"/><path transform="rotate(40)" d="M112-26Q142-12 168 0 142 12 112 26 122 0 112-26Z"/></g></svg>`;
-const NAV = [['index.html', 'Home'], ['about.html', 'About'], ['services.html', 'Services'], ['work.html', 'Work'], ['careers.html', 'Careers'], ['contact.html', 'Contact']];
-const WA = 'https://wa.me/201005420322';
-const LOGO = up('2025/02/Kiwano-Logo-01-01.png', 480);
-const PHONES = `<a href="tel:+201005420322">(+20) 100 542 0322</a><br><a href="tel:+201206866663">(+20) 120 686 6663</a>`;
+/* ---------- The character (hand-drawn vector, traced from the client's mascot) ---------- */
+const CC = { R: '#E5391C', RD: '#A61C10', O: '#F47A1A', Y: '#FBC31C', G: '#2F9B46', DK: '#33241F', RL: '#F4552B' };
+const leaf = (x, y0, y1, w, f) => { const h = y1 - y0; return `<path fill="${f}" d="M${x} ${y0}C${x + w} ${y0 + h * .34} ${x + w} ${y0 + h * .68} ${x} ${y1}C${x - w} ${y0 + h * .68} ${x - w} ${y0 + h * .34} ${x} ${y0}Z"/>`; };
+const st = (d, c, w = 8) => `<path fill="none" stroke="${c}" stroke-width="${w}" stroke-linecap="round" stroke-linejoin="round" d="${d}"/>`;
+const dot = (x, y, c, r = 5) => `<circle cx="${x}" cy="${y}" r="${r}" fill="${c}"/>`;
+function ornHalf(c) { // left half, mirrored for the right
+  const { O, Y, G, R } = c;
+  return `<path fill="${Y}" d="M207 28l9 22-21-5z"/>`
+    + `<path fill="${Y}" d="M191 47C170 58 170 90 194 100 188 82 188 64 191 47Z"/><path fill="${G}" d="M188 60C178 68 178 84 190 92 186 80 186 70 188 60Z"/>`
+    + st('M150 137C147 110 170 92 192 100 207 106 204 127 190 124 182 122 182 112 190 111', G, 7)
+    + st('M161 143C170 124 186 124 207 139', O, 7) + st('M173 118C181 112 186 113 190 111', Y, 3)
+    + st('M131 183C146 151 190 146 217 178', Y, 8) + st('M149 171C164 158 188 159 204 172', O, 5)
+    + dot(166, 76, O) + dot(147, 113, O, 5.5) + dot(131, 146, O, 5.5) + dot(121, 176, Y, 4)
+    + `<path fill="${Y}" d="M127 192C115 210 120 232 136 246 131 228 128 210 127 192Z"/>`
+    + st('M127 272C127 244 164 236 167 256 168 270 148 271 148 258', O, 7) + st('M131 287C143 276 160 274 170 282', Y, 6)
+    + st('M188 236C192 264 178 296 151 322', G, 10) + st('M178 282C172 298 164 310 154 320', Y, 2.5)
+    + dot(139, 306, O, 6) + dot(171, 327, O, 5) + dot(155, 343, Y, 4.5) + dot(198, 318, Y, 4)
+    + st('M165 347C180 356 190 372 205 390', O, 8) + st('M181 342C192 352 199 362 208 374', Y, 5);
+}
+function eyeL(id) {
+  return `<g class="eye"><clipPath id="ec${id}"><path d="M144 196C158 180 186 180 205 203 186 214 158 212 144 196Z"/></clipPath>
+<path fill="${CC.Y}" d="M130 193C150 163 196 166 218 208 192 226 150 220 130 193Z"/><path fill="${CC.G}" d="M138 195C155 172 192 174 211 206 189 219 154 215 138 195Z"/>
+<g class="lid"><path fill="${CC.DK}" d="M144 196C158 180 186 180 205 203 186 214 158 212 144 196Z"/><g clip-path="url(#ec${id})"><g class="pupil"><circle cx="175" cy="197" r="10" fill="${CC.Y}"/><circle cx="175" cy="197" r="4.5" fill="${CC.DK}"/></g></g></g></g>`;
+}
+function maskCore(c, withEyes, id) {
+  const m = 'translate(460 0) scale(-1 1)';
+  const nose = `<path fill="${c.Y}" d="M213 146H247L233 214H227Z"/><path fill="${c.O}" d="M230 168L256 240C259 252 250 257 240 257H220C210 257 201 252 204 240Z"/><path fill="${c.Y}" d="M230 200L244 244H216Z"/><path fill="${c.RD||c.R}" d="M227.5 214h5V254h-5z"/>`;
+  const mouth = `<path fill="${c.O}" d="M167 280C167 263 180 264 190 267H270C280 264 293 263 293 280V288C293 305 280 304 270 301H190C180 304 167 305 167 288Z"/><rect x="186" y="280" width="88" height="8" rx="4" fill="${c.RD||c.R}"/>`;
+  const fore = leaf(230, 20, 162, 40, c.Y) + leaf(230, 40, 152, 29, c.G) + leaf(230, 56, 140, 20, c.O) + leaf(230, 72, 128, 12, c.R) + leaf(230, 86, 118, 5, c.O);
+  const chin = leaf(230, 318, 411, 29, c.O) + leaf(230, 332, 402, 20, c.G) + leaf(230, 346, 394, 12, c.R) + leaf(230, 356, 386, 5, c.Y);
+  return fore + chin + ornHalf(c) + `<g transform="${m}">${ornHalf(c)}</g>` + nose + mouth
+    + (withEyes ? eyeL(id + 'a') + `<g transform="${m}">${eyeL(id + 'b')}</g>` : '');
+}
+const shadowC = { R: '#A61C10', O: '#A61C10', Y: '#A61C10', G: '#A61C10', RD: '#A61C10' };
+const MASK = 'M230 11C312 22 349 128 347 214 345 312 290 397 230 416 170 397 115 312 113 214 111 128 148 22 230 11Z';
+const maskSvg = id => `<path d="${MASK}" fill="#7E130B" transform="translate(0 8)"/><path d="${MASK}" fill="${CC.R}"/><path d="${MASK}" fill="none" stroke="${CC.RL}" stroke-width="3" transform="translate(230 214) scale(.975) translate(-230 -214)"/>
+<g transform="translate(0 2.6)">${maskCore(shadowC, false, id)}</g>${maskCore(CC, true, id)}`;
+function hem() { let s = ''; for (let i = 0; i < 9; i++) { const x = 139 + i * 20.2; s += `<path fill="${CC.Y}" d="M${x} 412l10-24 10 24z"/><path fill="${CC.G}" d="M${x + 4} 412l6-14 6 14z"/>`; } return s; }
+const SK = '#8A4D2C', SKD = '#6B3820';
+const foot = x => `<path stroke="${SK}" stroke-width="27" stroke-linecap="butt" d="M${x} 410V446"/><path fill="${SK}" d="M${x - 27} 462C${x - 27} 446 ${x + 27} 446 ${x + 27} 462 ${x + 27} 472 ${x - 27} 472 ${x - 27} 462Z"/><path fill="#4B2A18" d="M${x - 30} 466H${x + 30}C${x + 32} 474 ${x + 26} 477 ${x + 20} 477H${x - 20}C${x - 26} 477 ${x - 32} 474 ${x - 30} 466Z"/><path stroke="#4B2A18" stroke-width="7" d="M${x - 16} 453H${x + 16}"/>`;
+const arm = () => `<g>${st('M136 280C120 292 106 310 102 330', '#8E1712', 30)}${st('M102 334L100 341', CC.Y, 30).replace('stroke-linecap="round"', 'stroke-linecap="butt"')}${st('M101 344L104 364', SK, 19)}<circle cx="105" cy="374" r="15.5" fill="${SK}"/><path stroke="${SKD}" stroke-width="2.5" fill="none" stroke-linecap="round" d="M98 381v-8M105 383v-9M112 381v-8"/></g>`;
+const charSvg = id => `<svg viewBox="70 0 320 480" aria-hidden="true" focusable="false">
+<ellipse cx="230" cy="476" rx="120" ry="9" fill="#000" opacity=".22"/>
+<g class="fl">${foot(178)}</g><g class="fr">${foot(282)}</g>
+<g class="up"><path fill="#8E1712" d="M150 290H310L322 414H138Z"/><path fill="#6E0F0B" d="M139 386H321L322 414H138Z"/>${hem()}
+<g>${arm()}</g><g class="arm-r"><g transform="translate(460 0) scale(-1 1)">${arm()}</g></g>
+${maskSvg(id)}</g></svg>`;
+const peekSvg = () => `<svg viewBox="100 0 260 430" aria-hidden="true" focusable="false">${maskSvg('p')}</svg>`;
 
+/* ---------- Partials ---------- */
+const NAV = [['work.html', 'Work'], ['services.html', 'Services'], ['about.html', 'About'], ['careers.html', 'Careers'], ['contact.html', 'Contact']];
+const WA = 'https://wa.me/201005420322';
+const LOGO = up('2025/02/Kiwano-Logo-01-01.png', 1600);
+const SOCIAL = [['Facebook', 'https://www.facebook.com/kiwanomedia'], ['Instagram', 'https://www.instagram.com/kiwanomedia'], ['TikTok', 'https://www.tiktok.com/@kiwanomedia'], ['YouTube', 'https://www.youtube.com/@kiwanomedia'], ['Behance', 'https://www.behance.net/kiwanomedia'], ['LinkedIn', 'https://www.linkedin.com/company/kiwanomedia/']];
 function page({ file, title, desc, body, active, root = '' }) {
-  const nav = NAV.map(([h, n]) => `<li><a href="${root}${h}"${active === h ? ' aria-current="page"' : ''}>${n}</a></li>`).join('');
   const html = `<!doctype html>
 <html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
 <title>${esc(title)}</title><meta name="description" content="${esc(desc)}">
-<meta property="og:title" content="${esc(title)}"><meta property="og:description" content="${esc(desc)}"><meta name="theme-color" content="#D42E2D">
+<meta property="og:title" content="${esc(title)}"><meta property="og:description" content="${esc(desc)}"><meta name="theme-color" content="#C9211F">
 <link rel="icon" href="${up('2025/02/cropped-Fav-Icon-02.png', 96)}">
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link rel="preconnect" href="https://i0.wp.com">
-<link href="https://fonts.googleapis.com/css2?family=Bowlby+One&family=Cairo:wght@700&family=Figtree:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="${root}assets/style.css">
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,400..800&family=Cairo:wght@700&family=Instrument+Serif:ital@1&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="${root}assets/style.css?v=2">
 <script type="application/ld+json">{"@context":"https://schema.org","@type":"Organization","name":"KIWANO Media Agency","url":"https://kiwanomedia.com","email":"info@kiwanomedia.com","telephone":"+201005420322","address":{"@type":"PostalAddress","streetAddress":"Mostafa Kamel, Smouha","addressLocality":"Alexandria","addressCountry":"EG"}}</script>
 </head><body>
-<nav class="nav" aria-label="Main"><a href="${root}index.html" aria-label="KIWANO home"><img src="${LOGO}" alt="KIWANO" width="156" height="40"></a><ul>${nav}</ul>
-<a class="btn" href="${root}contact.html">Start a brief</a>
-<button class="burger" aria-label="Open menu" aria-expanded="false"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="3"><path d="M1 5l4.5 3L10 5l4.5 3L19 5M1 13l4.5 3 4.5-3 4.5 3 4.5-3"/></svg></button></nav>
-<div class="mob"><div>${NAV.map(([h, n]) => `<a class="d" href="${root}${h}">${n}</a>`).join('')}</div><p>info@kiwanomedia.com<br>(+20) 100 542 0322</p></div>
+<nav class="nav" aria-label="Main"><a href="${root}index.html" aria-label="KIWANO home"><img src="${LOGO}" alt="KIWANO" width="156" height="40"></a><ul>${NAV.map(([h, n]) => `<li><a href="${root}${h}"${active === h ? ' aria-current="page"' : ''}>${n}</a></li>`).join('')}</ul><button class="burger" aria-expanded="false">Menu</button></nav>
+<div class="mob">${'<div>' + NAV.map(([h, n]) => `<a class="d" href="${root}${h}">${n}</a>`).join('') + '</div>'}<p>info@kiwanomedia.com<br>(+20) 100 542 0322</p></div>
 <main>${body}</main>
-<section class="cta sec"><div class="bigO">${SUN}</div><div class="wrap"><div class="in rv"><p class="lab">Now that you've seen a glimpse of us</p><h2 class="d h2" style="margin:.3em 0">Ready to be part of a tribe?</h2><p class="lead">Need a partner to help write your business success story? We're the co-authors you need.</p><p style="margin-top:24px"><a class="btn ink" href="${root}contact.html">Start a brief ${SPIKE}</a></p></div></div></section>
-<footer class="foot"><div class="wrap"><div class="foot-g">
-<div><h5>Visit</h5><p>Alexandria Office: Mostafa Kamel, Smouha, Alexandria, Egypt<br>Cairo Office: Soon</p><p style="margin-top:10px">Sunday to Thursday, 10:00 to 05:00</p></div>
-<div><h5>Pages</h5><ul>${NAV.map(([h, n]) => `<li><a href="${root}${h}">${n}</a></li>`).join('')}</ul></div>
-<div><h5>Talk</h5><p><a href="mailto:info@kiwanomedia.com">info@kiwanomedia.com</a><br>${PHONES}</p></div>
-<div><h5>Follow</h5><ul>${[['Facebook', 'https://www.facebook.com/kiwanomedia'], ['Instagram', 'https://www.instagram.com/kiwanomedia'], ['TikTok', 'https://www.tiktok.com/@kiwanomedia'], ['YouTube', 'https://www.youtube.com/@kiwanomedia'], ['Behance', 'https://www.behance.net/kiwanomedia'], ['LinkedIn', 'https://www.linkedin.com/company/kiwanomedia/']].map(([n, u]) => `<li><a href="${u}" target="_blank" rel="noopener">${n}</a></li>`).join('')}</ul></div>
-</div><img class="wm" src="${LOGO}" alt="" loading="lazy" width="1560" height="400">
-<div class="bot"><span>All rights reserved © 2026 Kiwano Media Agency.</span><span>Tax ID: 574-829-016</span></div></div></footer>
+<section class="close sec"><div class="wrap cgrid"><div class="txt rv"><h2 class="d h2">Ready to be part of a <span class="i">tribe?</span></h2><a class="big" href="mailto:info@kiwanomedia.com">info@kiwanomedia.com</a><a class="big" href="tel:+201005420322" style="margin-top:4px">(+20) 100 542 0322</a><p style="margin-top:24px"><a class="btn" href="${root}contact.html">Start a brief</a></p></div><div class="peek">${peekSvg()}</div></div></section>
+<footer class="foot"><div class="wrap"><div class="foot-g"><p>Mostafa Kamel, Smouha, Alexandria, Egypt<br>Sunday to Thursday, 10:00 to 05:00</p><ul>${SOCIAL.map(([n, u]) => `<li><a href="${u}" target="_blank" rel="noopener">${n}</a></li>`).join('')}</ul></div><div class="bot"><span>© 2026 Kiwano Media Agency</span><span>Tax ID 574-829-016</span></div></div></footer>
 <a class="wa" href="${WA}" target="_blank" rel="noopener" aria-label="Chat on WhatsApp"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2a10 10 0 0 0-8.6 15L2 22l5.2-1.4A10 10 0 1 0 12 2Zm5.8 14.2c-.2.7-1.4 1.3-2 1.4-.5.1-1.2.1-1.9-.1-3-.9-5.4-3.2-6.8-5.8-.5-.9-.9-2-.8-3 .1-.7.5-1.3 1-1.7.3-.2.8-.3 1.1 0l1 2.1c.1.3.1.5-.1.8l-.5.7c-.2.2-.2.4 0 .7.7 1.3 1.8 2.3 3.1 3 .3.1.5.1.7-.1l.7-.8c.2-.3.5-.3.8-.2l2 1c.3.2.4.3.5.5 0 .4 0 .9-.3 1.5Z"/></svg></a>
-<div class="modal" role="dialog" aria-modal="true" aria-label="Video player"><button class="close" aria-label="Close video">✕</button><div class="box"></div></div>
-<div class="wipe" aria-hidden="true"></div>
-<script src="${root}assets/app.js"></script></body></html>`;
+<div class="modal" role="dialog" aria-modal="true" aria-label="Video player"><button class="cl">Close</button><div class="boxv"></div></div>
+<script src="${root}assets/app.js?v=2"></script></body></html>`;
   const fp = path.join(OUT, file); fs.mkdirSync(path.dirname(fp), { recursive: true }); fs.writeFileSync(fp, html);
 }
 const catNames = p => p.c.map(c => CATS[c]);
-const card = (p, root = '', extra = '') => `<a class="wc ${p.big ? 'big' : ''}" href="${root}work/${p.s}.html" data-c="${p.c.join(' ')}" data-n="${esc((p.t + ' ' + catNames(p).join(' ')).toLowerCase())}" data-big="${p.big ? 1 : 0}" ${extra}><div class="im"><img src="${up(p.cv, p.big ? 1400 : 800)}" alt="${esc(p.t)} cover" loading="lazy"></div><div class="t"><h3>${esc(p.t)}</h3><small>${catNames(p)[0]}${p.c.length > 1 ? ' +' + (p.c.length - 1) : ''}</small></div></a>`;
-const ribbon = () => {
-  const phr = ['Made in Egypt', 'Rooted in Africa', 'Driven by global ambition', 'We know it all', 'Have it all'];
-  const t = phr.map(x => `<span>${x}</span>${SPIKE}`).join('');
-  return `<div class="ribbons" aria-hidden="true"><div class="rib b"><div class="track">${t + t + t + t}</div></div><div class="rib a"><div class="track">${t + t + t + t}</div></div></div>`;
-};
-const zigTrack = (key, on) => `<div class="zig" data-zig="${key}" ${on ? '' : 'hidden'}><svg class="line" aria-hidden="true"><path fill="none" stroke="#170F0D" stroke-width="4" d=""/></svg><ol>${TRACKS[key].map(([h, p]) => `<li><div class="pt"></div><div><h4>${h}</h4><p>${p}</p></div></li>`).join('')}</ol></div>`;
-const processBlock = () => `<div style="display:flex;flex-wrap:wrap;justify-content:space-between;gap:18px;align-items:end"><div><p class="lab" style="color:var(--red)">How the work moves</p><h2 class="d h2" style="margin-top:.2em;max-width:16ch">No mystery between brief and result.</h2></div><div class="tabs" role="tablist" data-tabs><button role="tab" data-t="social" aria-selected="true">Always-on social</button><button role="tab" data-t="prod" aria-selected="false">Production project</button></div></div>${zigTrack('social', true)}${zigTrack('prod', false)}`;
-const reels = () => `<div class="reels"><button class="reel" data-yt="ocGunjuen58"><img src="${up('2025/05/highlight-Cover-23.webp', 800)}" alt="" loading="lazy"><span>KIWANO Agency highlights</span></button><button class="reel" data-yt="PMH0Q3H4-g8"><img src="${up('2025/02/1920-x-1080.webp', 800)}" alt="" loading="lazy"><span>KIWANO x Dreem, the ad</span></button><button class="reel" data-yt="qJw_n_ItHlc"><img src="${up('2025/04/BTS-Cover-19.webp', 800)}" alt="" loading="lazy"><span>Dreem Eid 2023, behind the scenes</span></button></div>`;
 
 /* ---------- Home ---------- */
-const heroImgs = ['2025/03/Work-Covers-16-scaled.webp', '2025/05/Rivoli-08-scaled.webp', '2025/05/Mulberry-06-scaled.webp', '2025/03/Work-Covers-18-scaled.webp', '2025/05/Oxi-10-scaled.webp', '2025/05/highlight-Cover-23.webp'];
+const doorInner = id => `<div class="box"><div class="floor"></div><img class="wm" src="${LOGO}" alt=""><div class="fig"><div class="walker">${charSvg(id)}</div></div></div>`;
+const STRIPS = [
+  ['dreem-eid-commercial-ad', 'Dreem', 'Years as the digital architects behind the leader in powdered desserts.'],
+  ['rivoli', 'Rivoli', 'Social, production and two digital ad copies for a leader in personal care.'],
+  ['hardees', 'Hardee\'s', 'Food photography that makes you hungry.'],
+  ['ahlawy-biscuit', 'Ahlawy', 'Their social media journey started with us.'],
+  ['3seer-time', '3seer Time', 'Production, social and design under one brand.'],
+  ['mulberry', 'Mulberry', 'Warm photography and elegant branding for a cafe.'],
+  ['al-asdekaa-spread-cheese-ad', 'Al Asdekaa', 'The ad that launched their squirt cheese bottle.'],
+].map(([s, n, d]) => ({ p: P.find(x => x.s === s), n, d }));
 const logos = Array.from({ length: 48 }, (_, i) => up(`2025/03/White-Logos-${String(i + 1).padStart(2, '0')}.webp`, 300));
 const lrow = (a, b, rev) => { const l = logos.slice(a, b); return `<div class="lrow ${rev ? 'rev' : ''}">${[...l, ...l].map(u => `<img src="${u}" alt="" loading="lazy" width="751" height="439">`).join('')}</div>`; };
 const home = `
-<section class="hero" aria-label="Introduction"><div class="hero-pin">
-  <div class="h-amber"></div>${SPIKES_SVG}
-  <div class="h-reveal"><div class="scaler">${heroImgs.map(i => `<img src="${up(i, 1800)}" alt="">`).join('')}</div></div>
-  <img class="h-fruit" src="${up('2025/02/Counter-section-21.webp', 400)}" alt="" style="left:47%;top:13%">
-  <p class="h-hint lab"><i></i> Scroll through the O</p>
-  <div class="h-copy">
-    <span class="kick lab">Made in Egypt, rooted in Africa, driven by global ambition</span>
-    <h1 class="d">Brands you can't <em>scroll past.</em></h1>
-    <div class="h-foot"><p>A content-first media agency in Alexandria. Ads, production, social, talent and design, all from one tribe under one roof.</p>
-    <div class="h-acts"><a class="btn" href="contact.html">Start a brief</a><a class="btn line" href="work.html">See 33 projects</a></div></div>
-  </div>
-  <div class="h-end"><h2 class="d h2">This is what 5K+ videos look like</h2><button class="playb" data-yt="ocGunjuen58" aria-label="Play the KIWANO reel"><svg viewBox="0 0 20 22" fill="currentColor"><path d="M0 0l20 11L0 22z"/></svg></button><p class="lab">Play the reel, or keep scrolling</p></div>
+<section class="gate" aria-label="Welcome"><div class="gate-pin">
+  <div class="stage"><img class="poster" src="${up('2025/05/highlight-Cover-23.webp', 1800)}" alt=""><div class="yt" data-id="ocGunjuen58"></div>
+    <div class="st-in"><h1 class="d">We know it all,<br><span class="i">have it all.</span></h1><div class="st-acts"><button class="btn" data-yt="ocGunjuen58">Watch with sound</button><a class="btn line" href="work.html">See the work</a></div></div></div>
+  <div class="door l">${doorInner('l')}</div><div class="door r">${doorInner('r')}</div>
+  <div class="hi ar" dir="rtl" lang="ar">أهلاً!</div>
+  <p class="g-t a">Made in Egypt, rooted in Africa, driven by global ambition.</p><p class="g-t b">Scroll to come in</p>
 </div></section>
-${ribbon()}
-<section class="sec"><div class="wrap">
-  <p class="lab rv" style="color:var(--red);margin-bottom:16px">Where imagination meets impact</p>
-  <p class="state rv">A fearless <em>tribe</em> <img class="chip" src="${up('2025/03/Work-Covers-16-scaled.webp', 300)}" alt=""> of storytellers, makers and innovators, with the entire creative pipeline <img class="chip" src="${up('2025/05/Mulberry-06-scaled.webp', 300)}" alt=""> under <em>one roof.</em></p>
-  <div class="state-side rv"><p class="lead">Stories and visuals built for mobile, social and cinematic screens. Because concept, shoot and post live in the same building, the work moves fast, stays flexible and keeps its quality.</p>
-  <div><p class="lab">What guides the tribe</p><ul class="vals">${['Authenticity', 'Creativity', 'Excellence', 'Agility', 'Respect', 'Impact'].map(v => `<li>${v}</li>`).join('')}</ul><p style="margin-top:18px"><a class="tlink" href="about.html">Meet the kiwanoers</a></p></div></div>
-</div></section>
-<section class="nums sec"><div class="wrap"><p class="lab rv">The count so far</p><h2 class="d h2 rv" style="margin-top:.2em">Numbers with receipts.</h2><div class="num-grid">${NUMS.map(([n, s, l]) => `<div class="num rv"><b data-to="${n}" data-suf="${s}">${n}${s}</b><span>${l}</span></div>`).join('')}</div></div></section>
-<section class="srv sec"><div class="wrap"><div class="srv-head"><div><p class="lab" style="color:var(--amber)">What we do</p><h2 class="d h2" style="margin-top:.2em;max-width:13ch">Five crafts. One tribe.</h2></div><a class="btn" href="services.html">All service details</a></div>
-<div class="srv-list">${SERV.map((s, i) => `<div class="srow ${i === 1 ? 'open' : ''}"><button aria-expanded="${i === 1}"><span class="n">0${i + 1}</span><span class="d">${s.n}</span><span class="x"></span></button><div class="sbody"><div class="sin"><div class="sgrid"><img src="${up(s.img, 500)}" alt="" loading="lazy"><div><p class="lead" style="margin-bottom:8px">${s.hook}</p><p>${s.body}</p><p style="margin-top:12px"><a class="tlink" href="services.html#${s.k}">How ${s.n.toLowerCase()} works</a></p></div><div><h4 class="lab">You get</h4><ul>${s.get.map(g => `<li>${g}</li>`).join('')}</ul></div></div></div></div></div>`).join('')}</div></div></section>
-<section class="stories sec"><div class="wrap"><div class="srv-head"><div><p class="lab rv" style="color:var(--red)">Long relationships</p><h2 class="d h2 rv" style="margin-top:.2em;max-width:14ch">Brands that stayed with the tribe.</h2></div><a class="btn ink rv" href="work.html">All 33 projects</a></div>
-${STORIES.map(s => `<article class="scard" style="background:${s.bg}"><div class="tx"><img class="logo" src="${up(s.logo, 400)}" alt="${esc(s.n)} logo" loading="lazy"><div><p class="lead">${s.d}</p><ul class="tags" style="margin:14px 0 18px">${s.c.map(c => `<li>${c}</li>`).join('')}</ul><a class="btn" href="work/${s.s}.html">Open the project</a></div></div><a class="fig" href="work/${s.s}.html" aria-label="Open ${esc(s.n)} project"><img src="${up(s.cv, 1500)}" alt="" loading="lazy"></a></article>`).join('')}
-</div></section>
-<section class="roof sec"><div class="wrap roof-g"><div class="rv" style="position:sticky;top:110px"><p class="lab" style="color:var(--amber)">Under one roof</p><h2 class="d h2" style="margin:.2em 0 .4em">Why does a media agency have chefs?</h2><p class="lead">Because a burger needs a stylist as much as a camera. Six food stylists, hand models and chefs work next to the crew, so food shoots don't wait on outside vendors.</p><p style="margin-top:14px">Each ring is one person on the team. Hover or tap to see who.</p><p style="margin-top:18px"><a class="btn" href="about.html#team">Meet all ${TEAM.length + 2} of us</a></p></div>
-<div class="rv">${DEPTS.map(([k, n, s]) => { const m = TEAM.filter(t => t[2] === k); return `<div class="dept ${k === 'food' ? 'hot' : ''}"><h4>${n} <small>${s}</small></h4><div class="dots">${m.map(t => `<button class="dot" data-t="${esc(t[0] + ', ' + t[1])}" aria-label="${esc(t[0] + ', ' + t[1])}"></button>`).join('')}</div></div>`; }).join('')}</div></div></section>
-<section class="sec"><div class="wrap">${processBlock()}</div></section>
-<section class="clients sec"><div class="wrap"><p class="lab rv" style="color:var(--amber)">200+ clients, here are some</p><h2 class="d h2 rv" style="margin-top:.2em;max-width:14ch">We're thrilled to work alongside them.</h2></div><div class="lwrap">${lrow(0, 16)}${lrow(16, 32, 1)}${lrow(32, 48)}</div></section>
-<section class="voices sec"><div class="wrap"><p class="lab">What they say about us</p><h2 class="d h2" style="margin-top:.2em">In their words.</h2>
-<div class="v-g"><div><p class="quote long" aria-live="polite">"${esc(QUOTES[2][2])}"</p><div class="vwho"><img src="${up(`2025/04/Reviews-Logos-${QUOTES[2][3]}.webp`, 200)}" alt="${esc(QUOTES[2][0])} logo" loading="lazy"><div><b style="display:block">${esc(QUOTES[2][0])}</b><span>${esc(QUOTES[2][1])}</span></div></div></div>
-<div class="vlist">${QUOTES.map(([n, r, q, l]) => `<button aria-pressed="false" data-n="${esc(n)}" data-r="${esc(r)}" data-q="${esc(q)}" data-l="${up(`2025/04/Reviews-Logos-${l}.webp`, 200)}">${n}<small>${esc(r)}</small></button>`).join('')}</div></div></div></section>
-<section class="sec"><div class="wrap gf"><div class="rv"><p class="lab" style="color:var(--red)">Before you hire anyone</p><h2 class="d h2" style="margin:.2em 0 .5em">The field guide.</h2><div class="guide">${GUIDES.map(([u, t, d]) => `<a href="https://kiwanomedia.com/${u}/" target="_blank" rel="noopener">${t}<span>${d}</span></a>`).join('')}</div></div>
-<div class="rv"><p class="lab">Frequently asked questions</p><div style="margin-top:8px">${FAQ.map(([q, a], i) => `<details ${i === 0 ? 'open' : ''}><summary>${q}</summary><p>${a}</p></details>`).join('')}</div></div></div></section>`;
-page({ file: 'index.html', title: 'KIWANO | Full-Service Marketing & Media Agency in Egypt', desc: 'A content-first media agency in Alexandria, Egypt. Commercial ads, media production, social media, talent management and creative design, all under one roof.', body: home, active: 'index.html' });
+<section class="flood sec"><div class="wrap"><p class="d state rv">KIWANO is where imagination meets impact. A <span class="i">tribe</span> of storytellers and makers, with the whole pipeline under one roof.</p>
+<ul class="nums rv">${[[NUMS[0], 'Years in the market'], [NUMS[1], 'Satisfied clients'], [NUMS[2], 'Videos produced'], [NUMS[3], 'Views']].map(([n, l]) => `<li><b>${n[0]}${n[1]}</b><span>${l}</span></li>`).join('')}</ul></div></section>
+<section class="sec"><div class="wrap"><div class="head rv"><h2 class="d h2">The <span class="i">work</span></h2><a class="lnk" href="work.html">All ${P.length} projects</a></div>
+<div class="strips rv">${STRIPS.map((s, i) => `<a class="strip ${i === 0 ? 'on' : ''}" href="work/${s.p.s}.html"><img src="${up(s.p.cv, 1500)}" alt="" loading="lazy"><span class="v">${esc(s.n)}</span><div class="tx"><h3 class="d">${esc(s.n)}</h3><p>${s.d}</p></div></a>`).join('')}</div></div></section>
+<section class="sec" style="padding-top:0"><div class="wrap"><h2 class="d h2 rv">What we <span class="i">do</span></h2><div class="rows rv">${SERV.map(s => `<a class="row" href="services.html#${s.k}"><span class="d">${s.n}</span><p>${s.hook}</p></a>`).join('')}</div></div></section>
+<section class="food"><div class="ph"><img src="${up('2025/03/Work-Covers-16-scaled.webp', 1600)}" alt="Hardee's burger styled and shot by KIWANO" loading="lazy"></div><div class="tx rv"><h2 class="d h2" style="font-size:clamp(2.4rem,5vw,5.4rem)">Yes, there are <span class="i">chefs</span> in the office.</h2><p class="lead">Six food stylists, hand models and chefs work next to the camera crew. That's why our food looks the way it does.</p></div></section>
+<section class="sec"><div class="wrap"><h2 class="d h2 rv">200+ clients, <span class="i">some of them</span></h2></div><div class="lwrap rv">${lrow(0, 24)}${lrow(24, 48, 1)}</div></section>
+<section class="sec" style="padding-top:0"><div class="wrap"><p class="quote rv">"${esc(QUOTES[2][2])}"</p><div class="q-f"><p class="q-who"><b>${QUOTES[2][0]}</b><br><span class="dim">${QUOTES[2][1]}</span></p><div class="q-n"><button data-q="prev">Previous</button><button data-q="next">Next</button></div></div><script type="application/json" id="qd">${JSON.stringify(QUOTES.map(q => q.slice(0, 3))).replace(/</g, '\\u003c')}</script></div></section>`;
+page({ file: 'index.html', title: 'KIWANO | Full-Service Marketing & Media Agency in Egypt', desc: 'A content-first media agency in Alexandria, Egypt. Commercial ads, media production, social media, talent management and creative design, all under one roof.', body: home });
 
 /* ---------- About ---------- */
-const initials = n => n.split(' ').slice(0, 2).map(w => w[0]).join('');
 const about = `
-<header class="ph"><div class="sun ph-sun">${SUN}</div><div class="wrap"><p class="lab" style="color:var(--amber)">About KIWANO</p><h1 class="d h1" style="max-width:11ch;margin-top:.15em">Where imagination meets impact.</h1><p class="lead">Made in Egypt, rooted in Africa and driven by global ambition, we are a fearless tribe of storytellers, makers and innovators.</p></div></header>
-${ribbon()}
-<section class="sec"><div class="wrap roof-g"><div class="rv"><p class="lab" style="color:var(--red)">What we are</p><h2 class="d h2" style="margin-top:.2em">We don't just create content.</h2></div>
-<div class="rv"><p class="lead">We build movements, moments and meaning. As a content-first media agency, we craft bold, culture-driven stories and visuals that connect with people and leave a lasting mark.</p><p style="margin-top:16px">Ideas turn into experiences designed for mobile, social and cinematic screens. With the entire creative pipeline under one roof, we move fast, stay flexible and deliver uncompromising quality. Every step from concept to execution pushes brands forward, sparks measurable growth and mentors a new generation of fearless creators.</p><p style="margin-top:16px">Specializing in content creation, media production and social media management, KIWANO delivers stories that resonate locally, travel globally and make brands unforgettable.</p></div></div></section>
-<section class="nums sec"><div class="wrap"><p class="lab rv">Six things we hold to</p><div class="num-grid">${[['Authenticity', 'Culture-driven stories that sound like the people they\'re for.'], ['Creativity', 'New ideas and methods, always on the table.'], ['Excellence', 'Uncompromising quality at every step.'], ['Agility', 'Fast and flexible, with the pipeline in-house.'], ['Respect', 'Mentoring the next generation of creators.'], ['Impact', 'Measurable growth for the brands we serve.']].map(([v, d]) => `<div class="num rv" style="grid-column:span 4"><b style="font-size:clamp(1.3rem,3.1vw,3.2rem);margin-bottom:.4em">${v}</b><span>${d}</span></div>`).join('')}</div></div></section>
-<section class="sec"><div class="wrap"><p class="lab rv" style="color:var(--red)">Meet the founders</p><h2 class="d h2 rv" style="margin:.2em 0 .6em;max-width:17ch">Analytical, imaginative daydreamers and limitless thinkers.</h2><div class="found rv"><img src="${up('2025/02/Ceos-86-scaled.webp', 900)}" alt="Ahmed Sabry, Cofounder and CEO" loading="lazy"><img src="${up('2025/02/Ceos-87-scaled.webp', 900)}" alt="Ahmed Gamal, Cofounder and COO" loading="lazy"></div></div></section>
-<section class="sec" id="team" style="background:var(--paper-2)"><div class="wrap"><p class="lab" style="color:var(--red)">Meet the kiwanoers</p><h2 class="d h2" style="margin-top:.2em">Everyone in the building.</h2>
-<div class="fgrp chips"><button data-team="all" aria-pressed="true">All <sup>${TEAM.length}</sup></button>${DEPTS.map(([k, n]) => `<button data-team="${k}" aria-pressed="false">${n} <sup>${TEAM.filter(t => t[2] === k).length}</sup></button>`).join('')}</div>
-<div class="team">${TEAM.map(([n, r, d, im]) => `<div class="tm" data-d="${d}"><div class="ph-b">${im ? `<img src="${up(im, 400)}" alt="${esc(n)}" loading="lazy">` : `<span class="ini" aria-hidden="true">${initials(n)}</span>`}</div><h4>${n}</h4><p>${r}</p></div>`).join('')}</div></div></section>`;
-page({ file: 'about.html', title: 'About KIWANO | A Tribe of Storytellers in Egypt', desc: 'Meet KIWANO, a content-first media agency made in Egypt and rooted in Africa, its founders and the team of kiwanoers.', body: about, active: 'about.html' });
+<header class="pg red"><div class="wrap"><h1 class="d h1">A fearless <span class="i">tribe.</span></h1><p class="lead">Made in Egypt, rooted in Africa and driven by global ambition. Storytellers, makers and innovators.</p></div></header>
+<section class="sec"><div class="wrap two"><h2 class="d h2 rv" style="font-size:clamp(2.2rem,4.6vw,5rem)">We don't just create content.</h2><div class="rv"><p class="lead">We build movements, moments and meaning.</p><p style="margin-top:18px" class="dim">As a content-first media agency, we craft bold, culture-driven stories and visuals for mobile, social and cinematic screens. With the entire creative pipeline under one roof, we move fast, stay flexible and deliver uncompromising quality, and we mentor a new generation of fearless creators along the way.</p><p class="dim">Our guides are authenticity, creativity, excellence, agility, respect and impact.</p></div></div></section>
+<section class="sec" style="padding-top:0"><div class="wrap"><h2 class="d h2 rv" style="margin-bottom:.6em">The <span class="i">founders</span></h2><div class="found rv"><img src="${up('2025/02/Ceos-86-scaled.webp', 900)}" alt="Ahmed Sabry, Cofounder and CEO" loading="lazy"><img src="${up('2025/02/Ceos-87-scaled.webp', 900)}" alt="Ahmed Gamal, Cofounder and COO" loading="lazy"></div></div></section>
+<section class="sec" style="padding-top:0" id="team"><div class="wrap"><h2 class="d h2 rv" style="margin-bottom:.6em">The <span class="i">kiwanoers</span></h2>${DEPTS.map(([k, n]) => `<div class="dep"><h3>${n}</h3><ul>${TEAM.filter(t => t[2] === k).map(t => `<li>${t[0]}<span>${t[1]}</span></li>`).join('')}</ul></div>`).join('')}</div></section>`;
+page({ file: 'about.html', title: 'About KIWANO | A Tribe of Storytellers in Egypt', desc: 'KIWANO is a content-first media agency made in Egypt and rooted in Africa. Meet the founders and the kiwanoers.', body: about, active: 'about.html' });
 
 /* ---------- Services ---------- */
 const svc = `
-<header class="ph ink"><div class="sun">${SUN}</div><div class="wrap"><p class="lab" style="color:var(--amber)">Services</p><h1 class="d h1" style="max-width:12ch;margin-top:.15em">Five crafts. One building.</h1><p class="lead">Exactly what each service includes, who works on it and what it has already made. Use one, or run them together.</p></div></header>
-<div class="wrap"><nav class="svnav" aria-label="Services">${SERV.map(s => `<a href="#${s.k}">${s.n}</a>`).join('')}</nav>
-${SERV.map((s, i) => { const ex = P.filter(p => p.c.includes(s.cat)); return `<section class="sv" id="${s.k}"><div class="sv-g"><div class="sv-side"><img src="${up(s.img, 600)}" alt="" loading="lazy"></div><div><p class="lab" style="color:var(--red)">0${i + 1} of 05</p><h2 class="d h2" style="margin:.15em 0 .3em">${s.n}</h2><p class="lead">${s.hook}</p><p style="margin-top:10px;max-width:68ch">${s.body}</p>
-<div class="bl"><div><h4>What you get</h4><ul>${s.get.map(g => `<li>${g}</li>`).join('')}</ul></div><div><h4>Who is on it</h4><ul>${s.who.map(g => `<li>${g}</li>`).join('')}</ul></div></div>
-<div class="minis">${ex.slice(0, 3).map(p => `<a href="work/${p.s}.html" aria-label="${esc(p.t)}"><img src="${up(p.cv, 600)}" alt="" loading="lazy"></a>`).join('')}</div>
-<p style="margin-top:18px;display:flex;flex-wrap:wrap;gap:10px"><a class="btn" href="contact.html#${s.k}">Brief us on this</a><a class="btn line" href="work.html#${s.cat}">See ${ex.length} project${ex.length > 1 ? 's' : ''}</a></p></div></div></section>`; }).join('')}</div>
-<section class="sec"><div class="wrap">${processBlock()}</div></section>
-<section class="sec" style="background:var(--ink);color:var(--paper)"><div class="wrap"><p class="lab" style="color:var(--amber)">Watch it happen</p><h2 class="d h2" style="margin-top:.2em">On set with the crew.</h2>${reels()}</div></section>
-<section class="sec"><div class="wrap gf"><div><p class="lab" style="color:var(--red)">Questions</p><h2 class="d h2" style="margin-top:.2em">Cost, scope, fit.</h2></div><div>${FAQ.slice(1, 6).map(([q, a]) => `<details><summary>${q}</summary><p>${a}</p></details>`).join('')}</div></div></section>`;
+<header class="pg"><div class="wrap"><h1 class="d h1">Five crafts,<br><span class="i">one roof.</span></h1><p class="lead">What each service includes and who works on it. Use one, or run them together.</p></div></header>
+<div class="wrap">${SERV.map(s => { const ex = P.filter(p => p.c.includes(s.cat)); return `<section class="sv two" id="${s.k}"><h2 class="d h2 rv" style="font-size:clamp(2.2rem,4.8vw,5.2rem)">${s.n}</h2><div class="rv"><p class="lead">${s.hook}</p><p class="dim" style="margin-top:12px">${s.body}</p><ul class="list">${s.get.map(g => `<li>${g}</li>`).join('')}</ul><p class="who">On it: ${s.who.join(', ')}.</p><div class="ims">${ex.slice(0, 2).map(p => `<a href="work/${p.s}.html" aria-label="${esc(p.t)}"><img src="${up(p.cv, 800)}" alt="" loading="lazy"></a>`).join('')}</div><p style="margin-top:18px;display:flex;gap:22px;flex-wrap:wrap"><a class="lnk" href="contact.html#${s.k}">Brief us on this</a><a class="lnk" href="work.html#${s.cat}">See ${ex.length} project${ex.length > 1 ? 's' : ''}</a></p></div></section>`; }).join('')}</div>
+<section class="sec" style="background:var(--ink-2)"><div class="wrap two"><h2 class="d h2 rv" style="font-size:clamp(2.2rem,4.8vw,5.2rem)">How the work <span class="i">moves</span></h2><div class="rv"><h3 style="margin-bottom:10px">On a social media account</h3><ol class="steps">${TRACKS.social.map(([a, b]) => `<li><div><b>${a}</b><span>${b}</span></div></li>`).join('')}</ol><h3 style="margin:36px 0 10px">On a production</h3><ol class="steps">${TRACKS.prod.map(([a, b]) => `<li><div><b>${a}</b><span>${b}</span></div></li>`).join('')}</ol></div></div></section>
+<section class="sec"><div class="wrap two"><h2 class="d h2 rv" style="font-size:clamp(2.2rem,4.8vw,5.2rem)">Questions</h2><div class="rv">${FAQ.map(([q, a]) => `<details><summary>${q}</summary><p>${a}</p></details>`).join('')}<div style="margin-top:34px"><h3 style="margin-bottom:6px">Read more</h3>${GUIDES.map(([u, t]) => `<p style="padding:.25em 0"><a class="lnk" href="https://kiwanomedia.com/${u}/" target="_blank" rel="noopener">${t}</a></p>`).join('')}</div></div></div></section>`;
 page({ file: 'services.html', title: 'Services | Commercial Ads, Media Production, Social Media | KIWANO', desc: 'What KIWANO delivers across commercial ads, media production, social media, talent management and creative designs, and who works on each.', body: svc, active: 'services.html' });
 
 /* ---------- Work ---------- */
 const counts = k => P.filter(p => p.c.includes(k)).length;
 const work = `
-<header class="ph amb"><div class="wrap"><p class="lab">Work</p><h1 class="d h1" style="max-width:12ch;margin-top:.15em">${P.length} projects. Open any of them.</h1><p class="lead">From national FMCG ads to neighbourhood restaurants. Filter by craft or search a brand.</p></div></header>
-<section style="padding-bottom:clamp(44px,6vw,90px)"><div class="wrap"><div class="wbar"><div class="chips" role="group" aria-label="Filter by service"><button data-c="all" aria-pressed="true">All <sup>${P.length}</sup></button>${Object.entries(CATS).map(([k, n]) => `<button data-c="${k}" aria-pressed="false">${n} <sup>${counts(k)}</sup></button>`).join('')}</div><input class="wsearch" type="search" placeholder="Search a brand" aria-label="Search projects"></div>
-<div class="wgrid" data-filterable>${P.map(p => card(p)).join('')}</div><p class="wempty" hidden>No project matches that. Try another word or clear the filter.</p></div></section>
-<section class="sec" style="background:var(--ink);color:var(--paper)"><div class="wrap"><p class="lab" style="color:var(--amber)">Highlighted videos</p><h2 class="d h2" style="margin-top:.2em">Press play.</h2>${reels()}</div></section>`;
+<header class="pg"><div class="wrap"><h1 class="d h1">The <span class="i">work</span></h1></div></header>
+<section style="padding-bottom:var(--sec)"><div class="wrap"><div class="fil" role="group" aria-label="Filter by service"><button data-c="all" aria-pressed="true">All<sup>${P.length}</sup></button>${Object.entries(CATS).map(([k, n]) => `<button data-c="${k}" aria-pressed="false">${n}<sup>${counts(k)}</sup></button>`).join('')}</div>
+<div class="wgrid" data-f>${P.map(p => `<a class="wc" href="work/${p.s}.html" data-c="${p.c.join(' ')}"><div class="im"><img src="${up(p.cv, 1100)}" alt="${esc(p.t)} cover" loading="lazy"></div><h3>${esc(p.t)}</h3><small>${catNames(p).join(', ')}</small></a>`).join('')}</div></div></section>`;
 page({ file: 'work.html', title: 'Work | 33 Projects by KIWANO Media Agency', desc: 'Commercial ads, media production, social media, talent and design work by KIWANO for Dreem, Rivoli, Hardee\'s, Americana and more.', body: work, active: 'work.html' });
 
 /* ---------- Case pages ---------- */
 P.forEach((p, i) => {
   const nx = P[(i + 1) % P.length];
   const body = `
-<header class="case-h"><div class="wrap"><a class="crumb" href="../work.html">Back to all work</a><div class="case-m"><h1 class="d h2">${esc(p.t)}${p.ar ? `<br><span class="ar" dir="rtl" lang="ar">${p.ar}</span>` : ''}</h1><div><ul class="tags">${catNames(p).map(c => `<li>${c}</li>`).join('')}</ul></div></div>${p.d ? `<p class="lead" style="max-width:62ch;margin-top:clamp(14px,2vw,24px)">${esc(p.d)}</p>` : ''}</div></header>
-<div class="case-cover"><div class="wrap" style="padding-top:clamp(16px,2vw,28px)"><img src="${up(p.cv, 1800)}" alt="${esc(p.t)} cover"></div></div>
-<section style="padding-block:clamp(20px,3vw,44px)"><div class="wrap gal">
-${(p.yt || []).map(id => `<div class="vid"><button data-yt="${id}" data-inline aria-label="Play video"><img src="https://i.ytimg.com/vi/${id}/maxresdefault.jpg" alt="" loading="lazy"><span class="playb"><svg viewBox="0 0 20 22" fill="currentColor"><path d="M0 0l20 11L0 22z"/></svg></span></button></div>`).join('')}
+<header class="pg" style="padding-bottom:clamp(24px,3vw,44px)"><div class="wrap"><p style="margin-bottom:20px"><a class="lnk" href="../work.html">All work</a></p><div class="case-t"><h1 class="d h2">${esc(p.t)}${p.ar ? `<br><span class="ar" dir="rtl" lang="ar" style="font-size:.6em">${p.ar}</span>` : ''}</h1><p class="dim">${catNames(p).join(', ')}</p></div>${p.d ? `<p class="lead" style="color:inherit">${esc(p.d)}</p>` : ''}</div></header>
+<section><div class="wrap gal"><img src="${up(p.cv, 1800)}" alt="${esc(p.t)} cover">
+${(p.yt || []).map(id => `<div class="vid"><button data-yt="${id}" data-inline aria-label="Play video"><img src="https://i.ytimg.com/vi/${id}/maxresdefault.jpg" alt="" loading="lazy"><span class="pl">Play</span></button></div>`).join('')}
 ${p.g.map(g => `<img src="${up(g, 1800)}" alt="${esc(p.t)} project image" loading="lazy">`).join('')}
 </div></section>
-<a class="next" href="${nx.s}.html"><div class="wrap"><p class="lab">Next project</p><p class="d h2" style="margin-top:.15em">${esc(nx.t)}</p></div></a>`;
+<a class="next" href="${nx.s}.html"><div class="wrap"><p>Next</p><p class="d h2">${esc(nx.t)}</p></div></a>`;
   page({ file: `work/${p.s}.html`, title: `${p.t} | KIWANO Work`, desc: p.d || `${p.t}: ${catNames(p).join(', ')} by KIWANO Media Agency.`, body, active: 'work.html', root: '../' });
 });
 
 /* ---------- Careers ---------- */
 const careers = `
-<header class="ph"><div class="sun">${SUN}</div><div class="wrap"><p class="lab" style="color:var(--amber)">Careers</p><h1 class="d h1" style="max-width:11ch;margin-top:.15em">Join the tribe.</h1><p class="lead">${ROLES.length} open roles right now. Read exactly what each one asks, and what happens after you apply.</p></div></header>
-<section class="sec"><div class="wrap"><p class="lab" style="color:var(--red)">Available vacancies</p><div style="margin-top:12px">${ROLES.map((r, i) => `<details class="role" ${i === 0 ? 'open' : ''}><summary>${r.t}<small>${r.o}</small></summary>${r.intro ? `<p class="lead" style="max-width:70ch;margin-bottom:16px">${r.intro}</p>` : ''}<div class="bd"><div><h5>${r.a[0]}</h5><ul>${r.a[1].map(x => `<li>${esc(x)}</li>`).join('')}</ul></div><div><h5>${r.b[0]}</h5><ul>${r.b[1].map(x => `<li>${esc(x)}</li>`).join('')}</ul></div></div><p style="padding-bottom:26px"><a class="btn" href="${r.f}" target="_blank" rel="noopener">Apply now</a></p></details>`).join('')}</div></div></section>
-<section class="sec" style="background:var(--paper-2)"><div class="wrap"><p class="lab" style="color:var(--red)">After you apply</p><h2 class="d h2" style="margin:.2em 0 .6em;max-width:16ch">The honest timeline.</h2><div class="notice"><div class="ntc rv"><b>Up to 1 month</b><p>Applications are reviewed from the date of submission. Only shortlisted candidates are contacted.</p></div><div class="ntc rv"><b>Up to 2 weeks</b><p>After an interview, feedback is shared only if you are shortlisted or selected to move forward.</p></div><div class="ntc rv"><b>No reply?</b><p>If you hear nothing within those timelines, you were not shortlisted this time. Thank you for your patience and interest in KIWANO.</p></div></div></div></section>`;
+<header class="pg"><div class="wrap"><h1 class="d h1">Join the <span class="i">tribe.</span></h1><p class="lead">Applications are reviewed within a month, and we only contact shortlisted candidates. After an interview, feedback can take up to two weeks. If you hear nothing by then, you weren't shortlisted this time, and thank you for trying.</p></div></header>
+<section style="padding-bottom:var(--sec)"><div class="wrap">${ROLES.map(r => `<details class="role"><summary>${r.t}<small>${r.o}</small></summary>${r.intro ? `<p style="padding:0 0 16px;max-width:70ch">${r.intro}</p>` : ''}<div class="bd"><div><h4>${r.a[0]}</h4><ul>${r.a[1].map(x => `<li>${esc(x)}</li>`).join('')}</ul></div><div><h4>${r.b[0]}</h4><ul>${r.b[1].map(x => `<li>${esc(x)}</li>`).join('')}</ul></div></div><p style="padding-bottom:26px"><a class="btn" href="${r.f}" target="_blank" rel="noopener">Apply now</a></p></details>`).join('')}</div></section>`;
 page({ file: 'careers.html', title: 'Careers at KIWANO | Open Roles in Alexandria & Cairo', desc: 'Open roles at KIWANO Media Agency, including internships, account management, motion design, operations, sales and copywriting.', body: careers, active: 'careers.html' });
 
 /* ---------- Contact ---------- */
 const contact = `
-<header class="ph amb"><div class="wrap"><p class="lab">Contact</p><h1 class="d h1" style="max-width:12ch;margin-top:.15em">Let's write your success story.</h1><p class="lead">Tell us what you need and we'll review it, then schedule a free call to learn more about your goals.</p></div></header>
-<section class="sec"><div class="wrap"><form class="bb" id="brief" novalidate><div>
-<fieldset><legend>1. What do you need?</legend><div class="pick">${SERV.map(s => `<label><input type="checkbox" name="svc" value="${s.k}" data-l="${s.n}"><span class="c"><img src="${up(s.img, 160)}" alt="">${s.n}</span></label>`).join('')}</div></fieldset>
-<fieldset><legend>2. Where is the brand now?</legend><div class="fgrid"><label class="full">Stage<select name="stage"><option>Launching something new</option><option>Growing an existing brand</option><option>Need a one-off ad or shoot</option><option>Switching agencies</option></select></label><label class="full">What should change after this work?<textarea name="goal" rows="3" placeholder="A launch, more leads, a campaign for Ramadan..."></textarea></label></div></fieldset>
-<fieldset style="margin-bottom:0"><legend>3. Who should we call?</legend><div class="fgrid"><label>Your name<input name="name" autocomplete="name" required></label><label>Brand<input name="brand" autocomplete="organization" required></label><label class="full">Phone or WhatsApp<input name="phone" type="tel" autocomplete="tel"></label></div></fieldset></div>
-<aside class="panel" aria-live="polite"><h3 class="lab">Your crew</h3><ul id="crew"></ul><h3 class="lab" style="margin-top:18px">First outputs</h3><ul id="deliv"></ul><a class="btn" id="wa" href="${WA}" target="_blank" rel="noopener">Send on WhatsApp</a><a class="alt" id="mail" href="mailto:info@kiwanomedia.com">Or send by email</a><p class="err" role="alert"></p></aside></form></div></section>
-<section class="sec" style="background:var(--paper-2)"><div class="wrap cinfo"><div><h4 class="lab" style="color:var(--red)">Alexandria Office</h4><p>Mostafa Kamel, Smouha, Alexandria, Egypt</p><p style="margin-top:6px">Cairo Office: Soon</p></div><div><h4 class="lab" style="color:var(--red)">Phone</h4><p>${PHONES}</p></div><div><h4 class="lab" style="color:var(--red)">Email</h4><p><a href="mailto:info@kiwanomedia.com">info@kiwanomedia.com</a></p></div><div><h4 class="lab" style="color:var(--red)">Working hours</h4><p>Sunday to Thursday<br>10:00 to 05:00</p></div></div></section>
-<section class="clients sec"><div class="wrap"><p class="lab" style="color:var(--amber)">A sneak peek at our happy clients</p></div><div class="lwrap">${lrow(0, 24)}${lrow(24, 48, 1)}</div></section>`;
-page({ file: 'contact.html', title: 'Contact KIWANO | Start a Brief', desc: 'Start a brief with KIWANO Media Agency in Alexandria, Egypt. Pick the crafts you need and send it straight to the team.', body: contact, active: 'contact.html' });
+<header class="pg red"><div class="wrap"><h1 class="d h1">We're the <span class="i">co-authors</span> you need.</h1><p class="lead">Tell us what you're after. We'll review it and schedule a free call to learn more about your needs.</p></div></header>
+<section class="sec"><div class="wrap"><form class="frm" id="brief" novalidate>
+<fieldset><legend>What do you need?</legend><div class="cks">${SERV.map(s => `<label><input type="checkbox" name="svc" value="${s.k}" data-l="${s.n}"><span>${s.n}</span></label>`).join('')}</div></fieldset>
+<fieldset><legend>Who should we call?</legend><div class="fg"><label>Your name<input name="name" autocomplete="name" required></label><label>Brand<input name="brand" autocomplete="organization" required></label><label>Phone or WhatsApp<input name="phone" type="tel" autocomplete="tel"></label><label class="full">What should change after this work?<textarea name="goal" rows="2"></textarea></label></div></fieldset>
+<div><div class="acts"><a class="btn" id="wa" href="${WA}" target="_blank" rel="noopener">Send on WhatsApp</a><a class="lnk" id="mail" href="mailto:info@kiwanomedia.com">Send by email</a></div><p class="err" role="alert"></p></div></form></div></section>
+<section class="sec" style="padding-top:0"><div class="wrap cin"><div><h3>Alexandria</h3><p>Mostafa Kamel, Smouha, Alexandria, Egypt</p></div><div><h3>Cairo</h3><p>Soon</p></div><div><h3>Phone</h3><p><a href="tel:+201005420322">(+20) 100 542 0322</a><br><a href="tel:+201206866663">(+20) 120 686 6663</a></p></div><div><h3>Hours</h3><p>Sunday to Thursday<br>10:00 to 05:00</p></div></div></section>`;
+page({ file: 'contact.html', title: 'Contact KIWANO | Start a Brief', desc: 'Start a brief with KIWANO Media Agency in Alexandria, Egypt.', body: contact, active: 'contact.html' });
 
-console.log('Built', 6 + P.length, 'pages. Team', TEAM.length);
+console.log('Built', 6 + P.length, 'pages.');
