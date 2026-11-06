@@ -35,13 +35,16 @@ if(gate&&!still){
     figs.forEach(f=>f.style.transform=`translate(${x}px,${y}px) scale(${s})`);
     const split=o>0;L.style.width=split?'50%':'100%';R.style.display=split?'':'none';L.style.transform=`translateX(${-o*102}%)`;R.style.transform=`translateX(${o*102}%)`;
     L.style.visibility=R.style.visibility=o>=1?'hidden':'';L.style.setProperty('--seam',clamp(o/.04,0,1));R.style.setProperty('--seam',clamp(o/.04,0,1));
-    const t=clamp(1-p/.08,0,1);tx.forEach(e=>e.style.opacity=t);if(p>.02)hi.classList.remove('on');
-    wms.forEach(e=>e.style.opacity=.13*clamp(1-p/.22,0,1));$$('.roll').forEach(e=>e.style.opacity=clamp(1-p/.14,0,1));floors.forEach(e=>e.style.transform=`translateY(${p*500}%)`);
+    const t=clamp(1-p/.08,0,1);tx.forEach(e=>e.style.opacity=t);if(p>.02)hi.classList.remove('on');else if(L.classList.contains('waved'))hi.classList.add('on');
+    wms.forEach(e=>e.style.opacity=clamp(1-p/.22,0,1));$$('.roll').forEach(e=>e.style.opacity=clamp(1-p/.14,0,1));floors.forEach(e=>e.style.transform=`translateY(${p*500}%)`);
     const q=smooth(clamp((p-.74)/.14,0,1));ins.style.opacity=q;ins.style.transform=`translateY(${(1-q)*24}px)`;
   }
   new ResizeObserver(size).observe(pin);addEventListener('scroll',()=>requestAnimationFrame(frame),{passive:true});size();
   const doors=[L,R];doors.forEach(d=>d.classList.add('intro'));
   setTimeout(()=>{doors.forEach(d=>{d.classList.remove('intro');d.classList.add('waved')});if(scrollY<40)hi.classList.add('on')},2050);
+  /* He says hello in several languages, one at a time */
+  const hello=[['أهلاً!','ar'],['Hello!','en'],['مرحبا!','ar'],['Hola!','es'],['كيفكم؟','ar'],['Bonjour!','fr'],['Jambo!','sw'],['Ciao!','it']],word=$('span',hi);let hn=0;
+  setInterval(()=>{if(!hi.classList.contains('on'))return;hi.classList.add('sw');setTimeout(()=>{hn=(hn+1)%hello.length;const[t,l]=hello[hn],ar=l==='ar';word.textContent=t;hi.lang=l;hi.dir=ar?'rtl':'ltr';hi.classList.toggle('ar',ar);hi.classList.toggle('lat',!ar);hi.classList.remove('sw')},190)},1500);
 
   /* Reel behind the doors, shown only once it actually plays */
   const yt=$('.yt');

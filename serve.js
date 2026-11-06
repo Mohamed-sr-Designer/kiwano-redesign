@@ -1,6 +1,6 @@
 // Tiny static server for local preview: node serve.js
 const http = require('http'), fs = require('fs'), path = require('path');
-const types = { '.html': 'text/html; charset=utf-8', '.css': 'text/css', '.js': 'text/javascript' };
+const types = {'.svg':'image/svg+xml', '.html': 'text/html; charset=utf-8', '.css': 'text/css', '.js': 'text/javascript' };
 http.createServer((q, s) => {
   let p = decodeURIComponent(q.url.split('?')[0]); if (p === '/') p = '/index.html';
   const f = path.join(__dirname, path.normalize(p));
