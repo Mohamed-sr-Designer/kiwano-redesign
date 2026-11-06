@@ -7,6 +7,10 @@ const still=matchMedia('(prefers-reduced-motion:reduce)').matches;
 const burger=$('.burger'),mob=$('.mob');
 if(burger)burger.addEventListener('click',()=>{const o=mob.classList.toggle('open');burger.setAttribute('aria-expanded',o);burger.textContent=o?'Close':'Menu';document.body.style.overflow=o?'hidden':''});
 
+/* Nav leaves on the way down, returns solid on the way up, so it never sits on top of headings */
+const nav=$('.nav');
+if(nav){let last=scrollY;addEventListener('scroll',()=>{const y=scrollY,d=y-last;if(Math.abs(d)<6)return;const open=mob&&mob.classList.contains('open');nav.classList.toggle('away',d>0&&y>120&&!open);nav.classList.toggle('solid',y>120);last=y},{passive:true})}
+
 /* Reveal */
 const io=new IntersectionObserver(es=>es.forEach(en=>{if(en.isIntersecting){en.target.classList.add('in');io.unobserve(en.target)}}),{threshold:.12});
 $$('.rv,.peek').forEach(el=>io.observe(el));

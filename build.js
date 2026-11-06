@@ -222,7 +222,7 @@ function page({ file, title, desc, body, active, root = '' }) {
 <link rel="icon" href="${up('2025/02/cropped-Fav-Icon-02.png', 96)}">
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link rel="preconnect" href="https://i0.wp.com">
 <link href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,400..800&family=Cairo:wght@700&family=Instrument+Serif:ital@1&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="${root}assets/style.css?v=7">
+<link rel="stylesheet" href="${root}assets/style.css?v=8">
 <script type="application/ld+json">{"@context":"https://schema.org","@type":"Organization","name":"KIWANO Media Agency","url":"https://kiwanomedia.com","email":"info@kiwanomedia.com","telephone":"+201005420322","address":{"@type":"PostalAddress","streetAddress":"Mostafa Kamel, Smouha","addressLocality":"Alexandria","addressCountry":"EG"}}</script>
 </head><body>
 <nav class="nav" aria-label="Main"><a href="${root}index.html" aria-label="KIWANO home"><img src="${LOGO}" alt="KIWANO" width="156" height="40"></a><ul>${NAV.map(([h, n]) => `<li><a href="${root}${h}"${active === h ? ' aria-current="page"' : ''}>${n}</a></li>`).join('')}</ul><button class="burger" aria-expanded="false">Menu</button></nav>
@@ -232,7 +232,7 @@ function page({ file, title, desc, body, active, root = '' }) {
 <footer class="foot"><div class="wrap"><div class="foot-g"><p>Mostafa Kamel, Smouha, Alexandria, Egypt<br>Sunday to Thursday, 10:00 to 05:00</p><ul>${SOCIAL.map(([n, u]) => `<li><a href="${u}" target="_blank" rel="noopener">${n}</a></li>`).join('')}</ul></div><div class="bot"><span>© 2026 Kiwano Media Agency</span><span>Tax ID 574-829-016</span></div></div></footer>
 <a class="wa" href="${WA}" target="_blank" rel="noopener" aria-label="Chat on WhatsApp"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2a10 10 0 0 0-8.6 15L2 22l5.2-1.4A10 10 0 1 0 12 2Zm5.8 14.2c-.2.7-1.4 1.3-2 1.4-.5.1-1.2.1-1.9-.1-3-.9-5.4-3.2-6.8-5.8-.5-.9-.9-2-.8-3 .1-.7.5-1.3 1-1.7.3-.2.8-.3 1.1 0l1 2.1c.1.3.1.5-.1.8l-.5.7c-.2.2-.2.4 0 .7.7 1.3 1.8 2.3 3.1 3 .3.1.5.1.7-.1l.7-.8c.2-.3.5-.3.8-.2l2 1c.3.2.4.3.5.5 0 .4 0 .9-.3 1.5Z"/></svg></a>
 <div class="modal" role="dialog" aria-modal="true" aria-label="Video player"><button class="cl">Close</button><div class="boxv"></div></div>
-<script src="${root}assets/app.js?v=9"></script></body></html>`;
+<script src="${root}assets/app.js?v=10"></script></body></html>`;
   const fp = path.join(OUT, file); fs.mkdirSync(path.dirname(fp), { recursive: true }); fs.writeFileSync(fp, html);
 }
 const catNames = p => p.c.map(c => CATS[c]);
