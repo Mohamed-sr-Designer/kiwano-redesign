@@ -30,7 +30,7 @@ if(gate&&!still){
     const s=lerp(s0,1,z),x=lerp(x0,W/2-MX*u,z),y=lerp(y0,H/2-MY*u,z);
     figs.forEach(f=>f.style.transform=`translate(${x}px,${y}px) scale(${s})`);
     L.style.transform=`translateX(${-o*102}%)`;R.style.transform=`translateX(${o*102}%)`;
-    L.style.visibility=R.style.visibility=o>=1?'hidden':'';
+    L.style.visibility=R.style.visibility=o>=1?'hidden':'';L.style.setProperty('--seam',clamp(o/.04,0,1));R.style.setProperty('--seam',clamp(o/.04,0,1));
     const t=clamp(1-p/.08,0,1);tx.forEach(e=>e.style.opacity=t);if(p>.02)hi.classList.remove('on');
     wms.forEach(e=>e.style.opacity=.13*clamp(1-p/.22,0,1));floors.forEach(e=>e.style.transform=`translateY(${p*500}%)`);
     const q=smooth(clamp((p-.74)/.14,0,1));ins.style.opacity=q;ins.style.transform=`translateY(${(1-q)*24}px)`;

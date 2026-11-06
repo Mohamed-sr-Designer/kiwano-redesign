@@ -164,11 +164,11 @@ ul,ol{list-style:none;padding:0}
 @media(max-width:820px){.two{grid-template-columns:1fr}}
 .found{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:clamp(10px,2vw,28px);max-width:860px}
 .found img{width:100%;height:auto}
-.dep{display:grid;grid-template-columns:minmax(0,.8fr) minmax(0,1.2fr);gap:12px clamp(24px,6vw,110px);padding:clamp(18px,2vw,30px) 0;border-top:1.5px solid var(--line)}
+.dep{display:grid;grid-template-columns:minmax(0,.42fr) minmax(0,1.58fr);gap:12px clamp(24px,6vw,110px);padding:clamp(18px,2vw,30px) 0;border-top:1.5px solid var(--line)}
 .dep h3{font:800 clamp(1.5rem,2.6vw,2.8rem)/1 var(--d);font-stretch:72%}
 .dep li{display:flex;justify-content:space-between;gap:16px;padding:.26em 0}
 .dep li span{color:var(--dim);text-align:right}
-@media(max-width:700px){.dep{grid-template-columns:1fr}.dep li{display:block}.dep li span{display:block;text-align:left;font-size:.9rem}}
+@media(max-width:700px){.dep{grid-template-columns:minmax(0,1fr)}}
 .sv{padding-block:clamp(44px,6vw,90px);border-top:1.5px solid var(--line);scroll-margin-top:60px}
 .sv .list{columns:2;column-gap:40px;margin-top:20px}
 .sv .list li{padding:.3em 0;break-inside:avoid}
@@ -266,3 +266,28 @@ details p{padding-bottom:1em;color:var(--dim);max-width:62ch}
   .stage{position:relative;min-height:100svh}
 }
 @media(max-width:520px){.g-t.a{display:none}.g-t.b{left:var(--gut);right:auto;text-align:left}}
+
+/* Pattern: the hem of his tunic, used as a band and on the door edges */
+.band{height:44px;background:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='96' height='44'%3E%3Crect width='96' height='44' fill='%236E0F0B'/%3E%3Cpath fill='%23FBC31C' d='M0 44 16 12l16 32zM32 44 48 12l16 32zM64 44 80 12l16 32z'/%3E%3Cpath fill='%232F9B46' d='M8 44 16 28l8 16zM40 44 48 28l8 16zM72 44 80 28l8 16z'/%3E%3Cpath fill='none' stroke='%23F47A1A' stroke-width='3' d='M0 8l8-5 8 5 8-5 8 5 8-5 8 5 8-5 8 5 8-5 8 5 8-5 8 5'/%3E%3C/svg%3E") repeat-x center/96px 44px;position:relative;z-index:1}
+.seam{position:absolute;top:0;bottom:0;width:44px;background:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='44' height='96'%3E%3Crect width='44' height='96' fill='%236E0F0B'/%3E%3Cpath fill='%23FBC31C' d='M44 0 12 16l32 16zM44 32 12 48l32 16zM44 64 12 80l32 16z'/%3E%3Cpath fill='%232F9B46' d='M44 8 28 16l16 8zM44 40 28 48l16 8zM44 72 28 80l16 8z'/%3E%3Cpath fill='none' stroke='%23F47A1A' stroke-width='3' d='M8 0 3 8l5 8-5 8 5 8-5 8 5 8-5 8 5 8-5 8 5 8-5 8 5 8'/%3E%3C/svg%3E") repeat-y center/44px 96px;opacity:var(--seam,0);z-index:3}
+.door.l .seam{right:0;transform:scaleX(-1)}
+.door.r .seam{left:0}
+.flood,.close,.pg.red{position:relative;isolation:isolate}
+.flood::before,.close::before,.pg.red::before{content:"";position:absolute;inset:0;z-index:-1;background:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='240' height='240' fill='none' stroke='%23A81718' stroke-width='6'%3E%3Cpath d='M0 40l20-20 20 20 20-20 20 20 20-20 20 20 20-20 20 20 20-20 20 20 20-20 20 20M0 74l20-20 20 20 20-20 20 20 20-20 20 20 20-20 20 20 20-20 20 20 20-20 20 20'/%3E%3Cpath d='M60 100l50 50-50 50-50-50zM60 122l28 28-28 28-28-28z'/%3E%3Cpath fill='%23A81718' d='M60 141l9 9-9 9-9-9z'/%3E%3Ccircle cx='180' cy='150' r='36'/%3E%3Ccircle cx='180' cy='150' r='18'/%3E%3Cpath d='M130 100v12M146 100v12M162 100v12M178 100v12M194 100v12M210 100v12M226 100v12M130 188v12M146 188v12M162 188v12M178 188v12M194 188v12M210 188v12M226 188v12'/%3E%3C/svg%3E") 0 0/300px;-webkit-mask:linear-gradient(100deg,transparent 42%,#000 92%);mask:linear-gradient(100deg,transparent 42%,#000 92%)}
+
+/* People */
+.people{padding-top:0}
+.pwrap{margin-top:clamp(30px,4vw,54px);overflow:hidden}
+.prow{display:flex;width:max-content;gap:clamp(8px,1vw,16px);animation:slide 90s linear infinite}
+.pwrap:hover .prow{animation-play-state:paused}
+.pc{margin:0}
+.prow .pc{width:clamp(170px,17vw,270px);flex:none}
+.pi{aspect-ratio:1/1.14;overflow:hidden;background:var(--red)}
+.pi img{width:100%;height:100%;object-fit:cover;transition:transform .7s var(--ease)}
+.pc:hover .pi img{transform:scale(1.04)}
+.pi.fd{background:none}.pi.fd img{object-fit:contain}
+.pc figcaption{padding-top:9px;line-height:1.25}
+.pc b{display:block;font-weight:700}
+.pc span{display:block;color:var(--dim);font-size:.88rem;margin-top:2px}
+.tg{display:grid;grid-template-columns:repeat(auto-fill,minmax(min(46%,190px),1fr));gap:clamp(20px,2vw,30px) clamp(10px,1.1vw,16px)}
+@media(prefers-reduced-motion:reduce){.prow{animation:none}.pwrap{overflow-x:auto}}

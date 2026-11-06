@@ -222,23 +222,25 @@ function page({ file, title, desc, body, active, root = '' }) {
 <link rel="icon" href="${up('2025/02/cropped-Fav-Icon-02.png', 96)}">
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link rel="preconnect" href="https://i0.wp.com">
 <link href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,400..800&family=Cairo:wght@700&family=Instrument+Serif:ital@1&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="${root}assets/style.css?v=2">
+<link rel="stylesheet" href="${root}assets/style.css?v=3">
 <script type="application/ld+json">{"@context":"https://schema.org","@type":"Organization","name":"KIWANO Media Agency","url":"https://kiwanomedia.com","email":"info@kiwanomedia.com","telephone":"+201005420322","address":{"@type":"PostalAddress","streetAddress":"Mostafa Kamel, Smouha","addressLocality":"Alexandria","addressCountry":"EG"}}</script>
 </head><body>
 <nav class="nav" aria-label="Main"><a href="${root}index.html" aria-label="KIWANO home"><img src="${LOGO}" alt="KIWANO" width="156" height="40"></a><ul>${NAV.map(([h, n]) => `<li><a href="${root}${h}"${active === h ? ' aria-current="page"' : ''}>${n}</a></li>`).join('')}</ul><button class="burger" aria-expanded="false">Menu</button></nav>
 <div class="mob">${'<div>' + NAV.map(([h, n]) => `<a class="d" href="${root}${h}">${n}</a>`).join('') + '</div>'}<p>info@kiwanomedia.com<br>(+20) 100 542 0322</p></div>
 <main>${body}</main>
-<section class="close sec"><div class="wrap cgrid"><div class="txt rv"><h2 class="d h2">Ready to be part of a <span class="i">tribe?</span></h2><a class="big" href="mailto:info@kiwanomedia.com">info@kiwanomedia.com</a><a class="big" href="tel:+201005420322" style="margin-top:4px">(+20) 100 542 0322</a><p style="margin-top:24px"><a class="btn" href="${root}contact.html">Start a brief</a></p></div><div class="peek">${peekSvg()}</div></div></section>
+<div class="band" aria-hidden="true"></div><section class="close sec"><div class="wrap cgrid"><div class="txt rv"><h2 class="d h2">Ready to be part of a <span class="i">tribe?</span></h2><a class="big" href="mailto:info@kiwanomedia.com">info@kiwanomedia.com</a><a class="big" href="tel:+201005420322" style="margin-top:4px">(+20) 100 542 0322</a><p style="margin-top:24px"><a class="btn" href="${root}contact.html">Start a brief</a></p></div><div class="peek">${peekSvg()}</div></div></section>
 <footer class="foot"><div class="wrap"><div class="foot-g"><p>Mostafa Kamel, Smouha, Alexandria, Egypt<br>Sunday to Thursday, 10:00 to 05:00</p><ul>${SOCIAL.map(([n, u]) => `<li><a href="${u}" target="_blank" rel="noopener">${n}</a></li>`).join('')}</ul></div><div class="bot"><span>© 2026 Kiwano Media Agency</span><span>Tax ID 574-829-016</span></div></div></footer>
 <a class="wa" href="${WA}" target="_blank" rel="noopener" aria-label="Chat on WhatsApp"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2a10 10 0 0 0-8.6 15L2 22l5.2-1.4A10 10 0 1 0 12 2Zm5.8 14.2c-.2.7-1.4 1.3-2 1.4-.5.1-1.2.1-1.9-.1-3-.9-5.4-3.2-6.8-5.8-.5-.9-.9-2-.8-3 .1-.7.5-1.3 1-1.7.3-.2.8-.3 1.1 0l1 2.1c.1.3.1.5-.1.8l-.5.7c-.2.2-.2.4 0 .7.7 1.3 1.8 2.3 3.1 3 .3.1.5.1.7-.1l.7-.8c.2-.3.5-.3.8-.2l2 1c.3.2.4.3.5.5 0 .4 0 .9-.3 1.5Z"/></svg></a>
 <div class="modal" role="dialog" aria-modal="true" aria-label="Video player"><button class="cl">Close</button><div class="boxv"></div></div>
-<script src="${root}assets/app.js?v=2"></script></body></html>`;
+<script src="${root}assets/app.js?v=3"></script></body></html>`;
   const fp = path.join(OUT, file); fs.mkdirSync(path.dirname(fp), { recursive: true }); fs.writeFileSync(fp, html);
 }
 const catNames = p => p.c.map(c => CATS[c]);
 
+const BAND = '<div class="band" aria-hidden="true"></div>';
+const PH = t => t[3] ? up(t[3], 500) : up('2025/06/Kiwanoer-1.png', 500);
 /* ---------- Home ---------- */
-const doorInner = id => `<div class="box"><div class="floor"></div><img class="wm" src="${LOGO}" alt=""><div class="fig"><div class="walker">${charSvg(id)}</div></div></div>`;
+const doorInner = id => `<div class="box"><div class="floor"></div><img class="wm" src="${LOGO}" alt=""><div class="fig"><div class="walker">${charSvg(id)}</div></div></div><div class="seam"></div>`;
 const STRIPS = [
   ['dreem-eid-commercial-ad', 'Dreem', 'Years as the digital architects behind the leader in powdered desserts.'],
   ['rivoli', 'Rivoli', 'Social, production and two digital ad copies for a leader in personal care.'],
@@ -258,22 +260,23 @@ const home = `
   <div class="hi ar" dir="rtl" lang="ar">أهلاً!</div>
   <p class="g-t a">Made in Egypt, rooted in Africa, driven by global ambition.</p><p class="g-t b">Scroll to come in</p>
 </div></section>
-<section class="flood sec"><div class="wrap"><p class="d state rv">KIWANO is where imagination meets impact. A <span class="i">tribe</span> of storytellers and makers, with the whole pipeline under one roof.</p>
+${BAND}<section class="flood sec"><div class="wrap"><p class="d state rv">KIWANO is where imagination meets impact. A <span class="i">tribe</span> of storytellers and makers, with the whole pipeline under one roof.</p>
 <ul class="nums rv">${[[NUMS[0], 'Years in the market'], [NUMS[1], 'Satisfied clients'], [NUMS[2], 'Videos produced'], [NUMS[3], 'Views']].map(([n, l]) => `<li><b>${n[0]}${n[1]}</b><span>${l}</span></li>`).join('')}</ul></div></section>
 <section class="sec"><div class="wrap"><div class="head rv"><h2 class="d h2">The <span class="i">work</span></h2><a class="lnk" href="work.html">All ${P.length} projects</a></div>
 <div class="strips rv">${STRIPS.map((s, i) => `<a class="strip ${i === 0 ? 'on' : ''}" href="work/${s.p.s}.html"><img src="${up(s.p.cv, 1500)}" alt="" loading="lazy"><span class="v">${esc(s.n)}</span><div class="tx"><h3 class="d">${esc(s.n)}</h3><p>${s.d}</p></div></a>`).join('')}</div></div></section>
 <section class="sec" style="padding-top:0"><div class="wrap"><h2 class="d h2 rv">What we <span class="i">do</span></h2><div class="rows rv">${SERV.map(s => `<a class="row" href="services.html#${s.k}"><span class="d">${s.n}</span><p>${s.hook}</p></a>`).join('')}</div></div></section>
 <section class="food"><div class="ph"><img src="${up('2025/03/Work-Covers-16-scaled.webp', 1600)}" alt="Hardee's burger styled and shot by KIWANO" loading="lazy"></div><div class="tx rv"><h2 class="d h2" style="font-size:clamp(2.4rem,5vw,5.4rem)">Yes, there are <span class="i">chefs</span> in the office.</h2><p class="lead">Six food stylists, hand models and chefs work next to the camera crew. That's why our food looks the way it does.</p></div></section>
-<section class="sec"><div class="wrap"><h2 class="d h2 rv">200+ clients, <span class="i">some of them</span></h2></div><div class="lwrap rv">${lrow(0, 24)}${lrow(24, 48, 1)}</div></section>
+<section class="sec people"><div class="wrap head rv"><h2 class="d h2">The <span class="i">people</span></h2><a class="lnk" href="about.html#team">Meet all ${TEAM.length + 2} kiwanoers</a></div><div class="pwrap rv"><div class="prow">${(() => { const l = [['Ahmed Sabry', 'Cofounder / CEO', '', '2025/02/Ceos-86-scaled.webp', 1], ['Ahmed Gamal', 'Cofounder / COO', '', '2025/02/Ceos-87-scaled.webp', 1], ...TEAM.filter(t => t[3])]; return [...l, ...l].map((t, i) => `<figure class="pc" ${i >= l.length ? 'aria-hidden="true"' : ''}><div class="pi ${t[4] ? 'fd' : ''}"><img src="${up(t[3], 500)}" alt="${i >= l.length ? '' : esc(t[0])}" loading="lazy"></div>${t[4] ? '' : `<figcaption><b>${t[0]}</b><span>${t[1]}</span></figcaption>`}</figure>`).join(''); })()}</div></div></section>
+<section class="sec" style="padding-top:0"><div class="wrap"><h2 class="d h2 rv">200+ clients, <span class="i">some of them</span></h2></div><div class="lwrap rv">${lrow(0, 24)}${lrow(24, 48, 1)}</div></section>
 <section class="sec" style="padding-top:0"><div class="wrap"><p class="quote rv">"${esc(QUOTES[2][2])}"</p><div class="q-f"><p class="q-who"><b>${QUOTES[2][0]}</b><br><span class="dim">${QUOTES[2][1]}</span></p><div class="q-n"><button data-q="prev">Previous</button><button data-q="next">Next</button></div></div><script type="application/json" id="qd">${JSON.stringify(QUOTES.map(q => q.slice(0, 3))).replace(/</g, '\\u003c')}</script></div></section>`;
 page({ file: 'index.html', title: 'KIWANO | Full-Service Marketing & Media Agency in Egypt', desc: 'A content-first media agency in Alexandria, Egypt. Commercial ads, media production, social media, talent management and creative design, all under one roof.', body: home });
 
 /* ---------- About ---------- */
 const about = `
-<header class="pg red"><div class="wrap"><h1 class="d h1">A fearless <span class="i">tribe.</span></h1><p class="lead">Made in Egypt, rooted in Africa and driven by global ambition. Storytellers, makers and innovators.</p></div></header>
+<header class="pg red"><div class="wrap"><h1 class="d h1">A fearless <span class="i">tribe.</span></h1><p class="lead">Made in Egypt, rooted in Africa and driven by global ambition. Storytellers, makers and innovators.</p></div></header>${BAND}
 <section class="sec"><div class="wrap two"><h2 class="d h2 rv" style="font-size:clamp(2.2rem,4.6vw,5rem)">We don't just create content.</h2><div class="rv"><p class="lead">We build movements, moments and meaning.</p><p style="margin-top:18px" class="dim">As a content-first media agency, we craft bold, culture-driven stories and visuals for mobile, social and cinematic screens. With the entire creative pipeline under one roof, we move fast, stay flexible and deliver uncompromising quality, and we mentor a new generation of fearless creators along the way.</p><p class="dim">Our guides are authenticity, creativity, excellence, agility, respect and impact.</p></div></div></section>
 <section class="sec" style="padding-top:0"><div class="wrap"><h2 class="d h2 rv" style="margin-bottom:.6em">The <span class="i">founders</span></h2><div class="found rv"><img src="${up('2025/02/Ceos-86-scaled.webp', 900)}" alt="Ahmed Sabry, Cofounder and CEO" loading="lazy"><img src="${up('2025/02/Ceos-87-scaled.webp', 900)}" alt="Ahmed Gamal, Cofounder and COO" loading="lazy"></div></div></section>
-<section class="sec" style="padding-top:0" id="team"><div class="wrap"><h2 class="d h2 rv" style="margin-bottom:.6em">The <span class="i">kiwanoers</span></h2>${DEPTS.map(([k, n]) => `<div class="dep"><h3>${n}</h3><ul>${TEAM.filter(t => t[2] === k).map(t => `<li>${t[0]}<span>${t[1]}</span></li>`).join('')}</ul></div>`).join('')}</div></section>`;
+<section class="sec" style="padding-top:0" id="team"><div class="wrap"><h2 class="d h2 rv" style="margin-bottom:.6em">The <span class="i">kiwanoers</span></h2>${DEPTS.map(([k, n]) => `<div class="dep"><h3>${n}</h3><div class="tg">${TEAM.filter(t => t[2] === k).map(t => `<figure class="pc"><div class="pi"><img src="${PH(t)}" alt="${t[3] ? esc(t[0]) : ''}" loading="lazy"></div><figcaption><b>${t[0]}</b><span>${t[1]}</span></figcaption></figure>`).join('')}</div></div>`).join('')}</div></section>`;
 page({ file: 'about.html', title: 'About KIWANO | A Tribe of Storytellers in Egypt', desc: 'KIWANO is a content-first media agency made in Egypt and rooted in Africa. Meet the founders and the kiwanoers.', body: about, active: 'about.html' });
 
 /* ---------- Services ---------- */
@@ -313,7 +316,7 @@ page({ file: 'careers.html', title: 'Careers at KIWANO | Open Roles in Alexandri
 
 /* ---------- Contact ---------- */
 const contact = `
-<header class="pg red"><div class="wrap"><h1 class="d h1">We're the <span class="i">co-authors</span> you need.</h1><p class="lead">Tell us what you're after. We'll review it and schedule a free call to learn more about your needs.</p></div></header>
+<header class="pg red"><div class="wrap"><h1 class="d h1">We're the <span class="i">co-authors</span> you need.</h1><p class="lead">Tell us what you're after. We'll review it and schedule a free call to learn more about your needs.</p></div></header>${BAND}
 <section class="sec"><div class="wrap"><form class="frm" id="brief" novalidate>
 <fieldset><legend>What do you need?</legend><div class="cks">${SERV.map(s => `<label><input type="checkbox" name="svc" value="${s.k}" data-l="${s.n}"><span>${s.n}</span></label>`).join('')}</div></fieldset>
 <fieldset><legend>Who should we call?</legend><div class="fg"><label>Your name<input name="name" autocomplete="name" required></label><label>Brand<input name="brand" autocomplete="organization" required></label><label>Phone or WhatsApp<input name="phone" type="tel" autocomplete="tel"></label><label class="full">What should change after this work?<textarea name="goal" rows="2"></textarea></label></div></fieldset>
