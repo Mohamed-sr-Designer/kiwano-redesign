@@ -21,7 +21,7 @@ const gate=$('.gate');
 if(gate&&!still){
   const pin=$('.gate-pin'),figs=$$('.fig'),L=$('.door.l'),R=$('.door.r'),ins=$('.st-in'),hi=$('.hi'),tx=$$('.g-t'),wms=$$('.wm'),floors=$$('.floor');
   const VW=320,VH=480,MX=160,MY=215,MH=403;let W,H,u,s0,x0,y0;
-  function size(){W=innerWidth;H=pin.offsetHeight;u=1.28*H/MH;
+  function size(){W=pin.offsetWidth;H=pin.offsetHeight;$('.box').forEach(b=>b.style.width=W+'px');$('.door.r .box').style.left=-W/2+'px';u=1.28*H/MH;
     const target=Math.min(H*.8,W*1.25);s0=target/(VH*u);
     figs.forEach(f=>{f.style.width=VW*u+'px';f.style.height=VH*u+'px'});
     x0=W/2-MX*u*s0;y0=H*.965-VH*u*s0;frame()}
@@ -29,7 +29,7 @@ if(gate&&!still){
     const z=smooth(clamp(p/.5,0,1)),o=smooth(clamp((p-.46)/.36,0,1));
     const s=lerp(s0,1,z),x=lerp(x0,W/2-MX*u,z),y=lerp(y0,H/2-MY*u,z);
     figs.forEach(f=>f.style.transform=`translate(${x}px,${y}px) scale(${s})`);
-    L.style.transform=`translateX(${-o*102}%)`;R.style.transform=`translateX(${o*102}%)`;
+    const split=o>0;L.style.width=split?'50%':'100%';R.style.display=split?'':'none';L.style.transform=`translateX(${-o*102}%)`;R.style.transform=`translateX(${o*102}%)`;
     L.style.visibility=R.style.visibility=o>=1?'hidden':'';L.style.setProperty('--seam',clamp(o/.04,0,1));R.style.setProperty('--seam',clamp(o/.04,0,1));
     const t=clamp(1-p/.08,0,1);tx.forEach(e=>e.style.opacity=t);if(p>.02)hi.classList.remove('on');
     wms.forEach(e=>e.style.opacity=.13*clamp(1-p/.22,0,1));floors.forEach(e=>e.style.transform=`translateY(${p*500}%)`);
