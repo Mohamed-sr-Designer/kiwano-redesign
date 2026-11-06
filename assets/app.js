@@ -32,7 +32,7 @@ if(gate&&!still){
     const split=o>0;L.style.width=split?'50%':'100%';R.style.display=split?'':'none';L.style.transform=`translateX(${-o*102}%)`;R.style.transform=`translateX(${o*102}%)`;
     L.style.visibility=R.style.visibility=o>=1?'hidden':'';L.style.setProperty('--seam',clamp(o/.04,0,1));R.style.setProperty('--seam',clamp(o/.04,0,1));
     const t=clamp(1-p/.08,0,1);tx.forEach(e=>e.style.opacity=t);if(p>.02)hi.classList.remove('on');
-    wms.forEach(e=>e.style.opacity=.13*clamp(1-p/.22,0,1));floors.forEach(e=>e.style.transform=`translateY(${p*500}%)`);
+    wms.forEach(e=>e.style.opacity=.13*clamp(1-p/.22,0,1));$$('.roll').forEach(e=>e.style.opacity=clamp(1-p/.14,0,1));floors.forEach(e=>e.style.transform=`translateY(${p*500}%)`);
     const q=smooth(clamp((p-.74)/.14,0,1));ins.style.opacity=q;ins.style.transform=`translateY(${(1-q)*24}px)`;
   }
   new ResizeObserver(size).observe(pin);addEventListener('scroll',()=>requestAnimationFrame(frame),{passive:true});size();
@@ -47,6 +47,10 @@ if(gate&&!still){
     addEventListener('message',e=>{if(!/youtube/.test(e.origin))return;try{const d=JSON.parse(e.data);if(d.info&&d.info.playerState===1)setTimeout(()=>yt.classList.add('on'),1600)}catch(_){}});
     addEventListener('scroll',function s(){if(scrollY>H*.4){load();removeEventListener('scroll',s)}},{passive:true})}
 }
+
+/* The fruit turns slowly with the scroll */
+const spin=$$('.kiw.big,.kiw.head');
+if(spin.length&&!still){const f=()=>spin.forEach(k=>{const r=k.getBoundingClientRect(),d=(r.top+r.height/2-innerHeight/2)/innerHeight;if(Math.abs(d)<1.4)k.firstElementChild.style.transform='rotate('+(-24+d*34)+'deg)'});addEventListener('scroll',()=>requestAnimationFrame(f),{passive:true});f()}
 
 /* Work strips */
 const strips=$$('.strip');
