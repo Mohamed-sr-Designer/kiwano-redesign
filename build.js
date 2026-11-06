@@ -2,7 +2,7 @@
 // All facts, stats, quotes, roles and project media are from kiwanomedia.com.
 const fs = require('fs'), path = require('path');
 const OUT = __dirname;
-const up = (p, w = 1400) => /\.gif$/.test(p)
+const up = (p, w = 1400) => /\.gif$|Tikka-(16|19)\.webp$/.test(p) // these two are rejected by the CDN resizer
   ? `https://kiwanomedia.com/wp-content/uploads/${p}`
   : `https://i0.wp.com/kiwanomedia.com/wp-content/uploads/${p}?w=${w}&ssl=1`;
 const esc = s => String(s).replace(/&/g, '&amp;').replace(/"/g, '&quot;').replace(/</g, '&lt;');
