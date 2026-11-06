@@ -265,3 +265,4 @@ details p{padding-bottom:1em;color:var(--dim);max-width:62ch}
   .door,.hi,.g-t{display:none}.st-in{opacity:1;transform:none}
   .stage{position:relative;min-height:100svh}
 }
+@media(max-width:520px){.g-t.a{display:none}.g-t.b{left:var(--gut);right:auto;text-align:left}}
